@@ -17,6 +17,18 @@ namespace NetGrpcSentry
             _sentryClient = sentryClient;
         }
 
+        public void GeneralInformationBreadcrumb()
+        {
+            _sentryClient.AddTrail(new Breadcrumb("General Information")
+            {
+                Message = "General information to the exception",
+                Data = new Dictionary<string, string>()
+                {
+                    {nameof(DateTime), DateTime.Now.ToLongDateString()}
+                }
+            });
+        }
+
         public void MessageBreadcrumb<T>(T message)
         {
             _sentryClient.AddTrail(new Breadcrumb("Message")

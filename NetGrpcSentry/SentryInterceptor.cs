@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
@@ -60,6 +59,7 @@ namespace NetGrpcSentry
             }
             catch (Exception e)
             {
+                _breadcrumber.GeneralInformationBreadcrumb();
                 _breadcrumber.MessageBreadcrumb(request);
                 _breadcrumber.ContextBreadcrumb(context);
                 _breadcrumber.MethodBreadcrumb(continuation.Method);
@@ -84,6 +84,7 @@ namespace NetGrpcSentry
             }
             catch (Exception e)
             {
+                _breadcrumber.GeneralInformationBreadcrumb();
                 _breadcrumber.MessageBreadcrumb(request);
                 _breadcrumber.ContextBreadcrumb(context);
                 _breadcrumber.MethodBreadcrumb(continuation.Method);
@@ -108,6 +109,7 @@ namespace NetGrpcSentry
             }
             catch (Exception e)
             {
+                _breadcrumber.GeneralInformationBreadcrumb();
                 _breadcrumber.ContextBreadcrumb(context);
                 _breadcrumber.MethodBreadcrumb(continuation.Method);
 
@@ -132,6 +134,7 @@ namespace NetGrpcSentry
             }
             catch (Exception e)
             {
+                _breadcrumber.GeneralInformationBreadcrumb();
                 _breadcrumber.ContextBreadcrumb(context);
                 _breadcrumber.MethodBreadcrumb(continuation.Method);
 
