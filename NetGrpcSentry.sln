@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetGrpcSentry", "NetGrpcSentry\NetGrpcSentry.csproj", "{21F90D30-7D90-4A44-AFA2-D5BB8A87BFF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetGrpcSentryTest", "NetGrpcSentryTest\NetGrpcSentryTest.csproj", "{167027D6-3A02-4F0E-9B5A-E41BB4364576}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21F90D30-7D90-4A44-AFA2-D5BB8A87BFF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21F90D30-7D90-4A44-AFA2-D5BB8A87BFF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21F90D30-7D90-4A44-AFA2-D5BB8A87BFF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21F90D30-7D90-4A44-AFA2-D5BB8A87BFF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{167027D6-3A02-4F0E-9B5A-E41BB4364576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{167027D6-3A02-4F0E-9B5A-E41BB4364576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{167027D6-3A02-4F0E-9B5A-E41BB4364576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{167027D6-3A02-4F0E-9B5A-E41BB4364576}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9BE8C2C1-FACF-4284-BE95-1B38A8583557}
+	EndGlobalSection
+EndGlobal
