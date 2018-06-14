@@ -46,127 +46,99 @@ namespace NetGrpcSentry
 
         #region SERVER
 
-        public override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request,
+        public override async Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request,
             ServerCallContext context,
             UnaryServerMethod<TRequest, TResponse> continuation)
         {
-            return continuation(request, context).ContinueWith(task =>
+            try
             {
-                if (task.Exception == null)
-                {
-                    return task.Result;
-                }
-
-                if (task.Exception != null &&
-                    task.Exception.InnerExceptions.All(exception => exception is RpcException))
-                {
-                    return task.Result;
-                }
-                
+                return await continuation(request, context);
+            }
+            catch (RpcException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
                 _breadcrumber.MessageBreadcrumb(request);
                 _breadcrumber.ContextBreadcrumb(context);
                 _breadcrumber.MethodBreadcrumb(continuation.Method);
-                
-                var exceptions = task.Exception.InnerExceptions.Where(e => !(e.InnerException is RpcException));
-                foreach (var exception in exceptions)
-                {
-                    _sentryClient.Capture(new SentryEvent(exception));
-                }
 
-                throw task.Exception;
+                _sentryClient.Capture(new SentryEvent(e));
 
-            }, TaskContinuationOptions.OnlyOnFaulted);
+                throw;
+            }
         }
 
-        public override Task ServerStreamingServerHandler<TRequest, TResponse>(TRequest request,
+        public override async Task ServerStreamingServerHandler<TRequest, TResponse>(TRequest request,
             IServerStreamWriter<TResponse> responseStream,
             ServerCallContext context, ServerStreamingServerMethod<TRequest, TResponse> continuation)
         {
-            return continuation(request, responseStream, context).ContinueWith(task =>
+            try
             {
-                if (task.Exception == null)
-                {
-                    return;
-                }
-
-                if (task.Exception != null &&
-                    task.Exception.InnerExceptions.All(exception => exception is RpcException))
-                {
-                    return;
-                }
-
+                await continuation(request, responseStream, context);
+            }
+            catch (RpcException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
                 _breadcrumber.MessageBreadcrumb(request);
                 _breadcrumber.ContextBreadcrumb(context);
                 _breadcrumber.MethodBreadcrumb(continuation.Method);
 
-                var exceptions = task.Exception.InnerExceptions.Where(e => !(e.InnerException is RpcException));
-                foreach (var exception in exceptions)
-                {
-                    _sentryClient.Capture(new SentryEvent(exception));
-                }
+                _sentryClient.Capture(new SentryEvent(e));
 
-            }, TaskContinuationOptions.OnlyOnFaulted);
+                throw;
+            }
         }
 
-        public override Task<TResponse> ClientStreamingServerHandler<TRequest, TResponse>(
+        public override async Task<TResponse> ClientStreamingServerHandler<TRequest, TResponse>(
             IAsyncStreamReader<TRequest> requestStream, ServerCallContext context,
             ClientStreamingServerMethod<TRequest, TResponse> continuation)
         {
-            return continuation(requestStream, context).ContinueWith(task =>
+            try
             {
-                if (task.Exception == null)
-                {
-                    return task.Result;
-                }
-
-                if (task.Exception != null &&
-                    task.Exception.InnerExceptions.All(exception => exception is RpcException))
-                {
-                    return task.Result;
-                }
-                
+                return await continuation(requestStream, context);
+            }
+            catch (RpcException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
                 _breadcrumber.ContextBreadcrumb(context);
                 _breadcrumber.MethodBreadcrumb(continuation.Method);
 
-                var exceptions = task.Exception.InnerExceptions.Where(e => !(e.InnerException is RpcException));
-                foreach (var exception in exceptions)
-                {
-                    _sentryClient.Capture(new SentryEvent(exception));
-                }
+                _sentryClient.Capture(new SentryEvent(e));
 
-                return task.Result;
-
-            }, TaskContinuationOptions.OnlyOnFaulted);
+                throw;
+            }
         }
 
-        public override Task DuplexStreamingServerHandler<TRequest, TResponse>(
+        public override async Task DuplexStreamingServerHandler<TRequest, TResponse>(
             IAsyncStreamReader<TRequest> requestStream,
             IServerStreamWriter<TResponse> responseStream, ServerCallContext context,
             DuplexStreamingServerMethod<TRequest, TResponse> continuation)
         {
-            return continuation(requestStream, responseStream, context).ContinueWith(task =>
+            try
             {
-                if (task.Exception == null)
-                {
-                    return;
-                }
-
-                if (task.Exception != null &&
-                    task.Exception.InnerExceptions.All(exception => exception is RpcException))
-                {
-                    return;
-                }
-
+                await continuation(requestStream, responseStream, context);
+            }
+            catch (RpcException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
                 _breadcrumber.ContextBreadcrumb(context);
                 _breadcrumber.MethodBreadcrumb(continuation.Method);
 
-                var exceptions = task.Exception.InnerExceptions.Where(e => !(e.InnerException is RpcException));
-                foreach (var exception in exceptions)
-                {
-                    _sentryClient.Capture(new SentryEvent(exception));
-                }
+                _sentryClient.Capture(new SentryEvent(e));
 
-            }, TaskContinuationOptions.OnlyOnFaulted);
+                throw;
+            }
         }
 
         #endregion

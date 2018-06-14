@@ -16,12 +16,14 @@ namespace NetGrpcSentryTest.Helpers
         {
             Port = PortFinder.FreeTcpPort();
 
+            var dsn = Environment.GetEnvironmentVariable("NetGrpcSentry_DSN");
+            
             _server = new Server()
             {
                 Services =
                 {
                     TestService.BindService(new ServiceImp())
-                        .Intercept(new SentryInterceptor(Environment.GetEnvironmentVariable("NetGrpcSentry_DSN")))
+                        .Intercept(new SentryInterceptor(dsn))
                 },
                 Ports = {new ServerPort("localhost", Port, ServerCredentials.Insecure)}
             };
