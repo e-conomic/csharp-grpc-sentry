@@ -21,7 +21,7 @@ namespace NetGrpcSentry
         {
             _sentryClient.AddTrail(new Breadcrumb("General Information")
             {
-                Message = "General information to the exception",
+                Message = "General information for the exception",
                 Data = new Dictionary<string, string>()
                 {
                     {nameof(DateTime), DateTime.Now.ToLongDateString()}
