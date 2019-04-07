@@ -6,7 +6,7 @@
     <Company>Visma e-conomic</Company>
     <Description>A gRPC interceptor for automatic logging of exceptions to the Sentry</Description>
     <Copyright>Copyright © 2018 Visma e-conomic</Copyright>
-    <PackageLicenseUrl>https://github.com/e-conomic/csharp-grpc-sentry/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/e-conomic/csharp-grpc-sentry</PackageProjectUrl>
     <RepositoryUrl>https://github.com/e-conomic/csharp-grpc-sentry</RepositoryUrl>
     <PackageTags>grpc interceptor intercept sentry logging logger log</PackageTags>
