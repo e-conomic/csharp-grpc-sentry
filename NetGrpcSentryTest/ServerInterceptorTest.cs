@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Resources;
 using NetGrpcSentryTest.Helpers;
 using NetGrpcSentryTest.Service;
 using NUnit.Framework;
@@ -65,12 +66,16 @@ namespace NetGrpcSentryTest
                 new Metadata() {new Metadata.Entry("MetadataKey", "value")}))
             {
                 // Act
-                while (await call.ResponseStream.MoveNext(CancellationToken.None))
+                var responseReaderTask = Task.Run(async () =>
                 {
-                    var result = call.ResponseStream.Current;
-                }
+                    while (await call.ResponseStream.MoveNext(CancellationToken.None))
+                    {
+                        var result = call.ResponseStream.Current;
+                    }
+                });
 
                 // Assert
+                Assert.ThrowsAsync<RpcException>(async () => { await responseReaderTask; });
             }
         }
 
@@ -92,9 +97,8 @@ namespace NetGrpcSentryTest
                 await call.RequestStream.WriteAsync(new Request() { Message = "this is request message" });
                 await call.RequestStream.CompleteAsync();
 
-                await responseReaderTask;
-
                 // Assert
+                Assert.ThrowsAsync<RpcException>(async () => { await responseReaderTask; });
             }
         }
     }

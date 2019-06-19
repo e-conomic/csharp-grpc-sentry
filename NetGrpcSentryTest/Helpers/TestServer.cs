@@ -16,7 +16,7 @@ namespace NetGrpcSentryTest.Helpers
         {
             Port = PortFinder.FreeTcpPort();
 
-            var dsn = Environment.GetEnvironmentVariable("NetGrpcSentry_DSN");
+            var dsn = Environment.GetEnvironmentVariable("NetGrpcSentry_DSN") ?? "http://test:test@localhost:65535/1";
             
             _server = new Server()
             {
